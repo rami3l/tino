@@ -1,6 +1,3 @@
-(ns tino.core
-  (:require [cljs.nodejs :as nodejs]))
+(ns tino.core)
 
-(nodejs/enable-util-print!)
-
-(println "Hello world!")
+(defn main [& cli-args] (prn "hello world"))
