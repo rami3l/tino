@@ -20,8 +20,11 @@ const bot = new Telegraf(botToken, botNewOpts);
 var botWebhookOpts = null;
 const botWebhookListen = process.env.TINO_TELEGRAM_BOT_WEBHOOK_LISTEN;
 if (botWebhookListen) {
-  botWebhookOpts = { path: botWebhookListen, port: process.env.PORT || 443 };
-  console.error(`Running in webhook mode at \`${botWebhookListen}\``);
+  const domain = botWebhookListen;
+  console.error(`Setting up webhook mode at \`${domain}\``);
+  const port = Number(process.env.PORT) || 443;
+  console.error(`Will be listening on port \`${port}\``);
+  botWebhookOpts = { domain, port };
 }
 
 /** @type {string[]} */
