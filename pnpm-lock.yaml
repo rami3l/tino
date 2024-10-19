@@ -11,6 +11,9 @@ importers:
       shadow-cljs:
         specifier: ^2.28.18
         version: 2.28.18
+      tio.js:
+        specifier: ^4.0.3
+        version: 4.0.3
 
 packages:
 
@@ -319,6 +322,10 @@ packages:
   timers-browserify@2.0.12:
     resolution: {integrity: sha512-9phl76Cqm6FhSX9Xe1ZUAMLtm1BLkKj2Qd5ApyWkXzsMRaA7dgr81kf4wJmQf/hAvg8EEyJxDo3du/0KlhPiKQ==}
     engines: {node: '>=0.6.0'}
+
+  tio.js@4.0.3:
+    resolution: {integrity: sha512-tJsC1yRZOVAAJH1TdIBXehVns6K9dfGbO34nGVDodRIvrfkrGRV4fw5bpGkOiqSBaiKFB2CvG5gkn647kSw1xQ==}
+    engines: {node: '>= 18'}
 
   to-arraybuffer@1.0.1:
     resolution: {integrity: sha512-okFlQcoGTi4LQBG/PgSYblw9VOyptsz2KJZqc6qtgGdes8VktzUQkj4BI2blit072iS8VODNcMA+tvnS9dnuMA==}
@@ -800,6 +807,8 @@ snapshots:
   timers-browserify@2.0.12:
     dependencies:
       setimmediate: 1.0.5
+
+  tio.js@4.0.3: {}
 
   to-arraybuffer@1.0.1: {}
 

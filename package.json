@@ -2,7 +2,16 @@
   "name": "tino",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "watch": "shadow-cljs watch script",
+    "compile": "shadow-cljs compile script",
+    "release": "shadow-cljs release script",
+    "clean": "rm -r target/*"
+  },
   "dependencies": {
-    "shadow-cljs": "^2.28.18"
+    "shadow-cljs": "^2.28.18",
+    "tio.js": "^4.0.3"
   }
 }

@@ -1,6 +1,8 @@
 ;; shadow-cljs configuration
-{:builds {:script {:main tino.core/main,
-                   :output-to "target/index.js",
-                   :target :node-script}},
+{:builds {:script {:js-options {:js-provider :import},
+                   :modules {:script {:init-fn tino.core/main}},
+                   :output-dir "target",
+                   :runtime :node,
+                   :target :esm}},
  :dependencies [],
  :source-paths ["src"]}
