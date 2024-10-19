@@ -16,6 +16,9 @@
     "globals": "^15.11.0"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
+    "socks-proxy-agent": "^8.0.4",
+    "telegraf": "^4.16.3",
     "tio.js": "^4.0.3"
   }
 }
