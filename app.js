@@ -44,16 +44,19 @@ function getBot() {
   }
 
   /** @param {CommandContext<Context>} ctx */
-  async function showLangs(ctx) {
+  async function showHelp(ctx) {
     await replyToMsg(
       ctx,
-      "Please refer to https://github.com/TryItOnline/tiosetup/tree/master/languages for the list of supported languages."
+      `Usage: /tio<lang> <code>
+e.g. /tiopython3 print("Hello, World!")
+
+Please refer to https://github.com/TryItOnline/tryitonline/tree/master/wrappers for the list of supported languages.`
     );
   }
 
   bot.command("tio", async (ctx) => {
     console.error("Triggered /tio");
-    await showLangs(ctx);
+    await showHelp(ctx);
   });
 
   for (const lang of langs) {
@@ -61,12 +64,8 @@ function getBot() {
     bot.command(cmd, async (ctx) => {
       console.error(`Triggered /${cmd}`);
       const args = ctx.message.text.split(/ (.*)/s);
-      if (args.length < 2) {
-        await replyToMsg(ctx, "Usage: /tio<lang> <code>");
-        return;
-      }
-      if (!langs.includes(lang)) {
-        await showLangs(ctx);
+      if (args.length < 2 || !langs.includes(lang)) {
+        await showHelp(ctx);
         return;
       }
       const [, code] = args;
