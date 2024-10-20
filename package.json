@@ -20,11 +20,11 @@
     "globals": "^15.11.0"
   },
   "dependencies": {
-    "dotenv": "^16.4.5",
-    "grammy": "^1.30.0",
     "next": "14.2.15",
     "react": "^18",
     "react-dom": "^18",
+    "dotenv": "^16.4.5",
+    "grammy": "^1.30.0",
     "socks-proxy-agent": "^8.0.4",
     "tio.js": "^4.0.3"
   }
