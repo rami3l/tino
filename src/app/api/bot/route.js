@@ -1,14 +1,14 @@
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
 import { SocksProxyAgent } from "socks-proxy-agent";
 import { Bot, webhookCallback } from "grammy";
 import { default as tio } from "tio.js";
 import "dotenv/config";
-import { express } from "express";
-
-const app = express();
-app.use(express.json());
 
 const bot = getBot();
-app.use(webhookCallback(bot, "express"));
+// https://www.launchfa.st/blog/telegram-nextjs-app-router
+export const POST = webhookCallback(bot, "std/http");
 
 function getBot() {
   const botToken = process.env.TINO_TELEGRAM_BOT_TOKEN;
@@ -79,5 +79,3 @@ function getBot() {
 
   return bot;
 }
-
-module.exports = app;
