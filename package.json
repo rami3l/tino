@@ -2,23 +2,25 @@
   "name": "tino",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www.js",
+    "build": "node scripts/build.js"
+  },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
+    "@types/express": "^5.0.0",
+    "esbuild": "^0.24.0",
     "eslint": "^9.13.0",
     "globals": "^15.11.0"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "grammy": "^1.30.0",
     "socks-proxy-agent": "^8.0.4",
-    "telegraf": "^4.16.3",
     "tio.js": "^4.0.3"
   }
 }
