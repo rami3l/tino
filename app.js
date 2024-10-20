@@ -60,19 +60,24 @@ Please refer to https://github.com/TryItOnline/tryitonline/tree/master/wrappers 
   });
 
   for (const lang of langs) {
-    let cmd = "tio" + lang;
+    // Remove `-` in `lang` since Telegram doesn't allow it.
+    const cmd = "tio" + lang.replace(/-/g, "");
     bot.command(cmd, async (ctx) => {
       console.error(`Triggered /${cmd}`);
       const args = ctx.message.text.split(/ (.*)/s);
-      if (args.length < 2 || !langs.includes(lang)) {
+      if (args.length < 2) {
         await showHelp(ctx);
         return;
       }
       const [, code] = args;
-      const { output, exitCode, realTime } = await tio(code, {
-        language: lang,
-      });
-      await replyToMsg(ctx, `${output}[exit(${exitCode}) in ${realTime}s]`);
+      try {
+        const { output, exitCode, realTime } = await tio(code, {
+          language: lang,
+        });
+        await replyToMsg(ctx, `${output}[exit(${exitCode}) in ${realTime}s]`);
+      } catch (err) {
+        await replyToMsg(ctx, err.message);
+      }
     });
   }
 
