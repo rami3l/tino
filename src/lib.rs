@@ -167,10 +167,10 @@ mod tests {
     async fn get_langs() -> Result<()> {
         let client = Client::default();
         let langs = client.langs().await?;
-        let langs = langs.iter().map(|l| &*l.name).join("\n");
+        let langs = langs.iter().map(|l| &*l.tio_name).collect_vec();
         Assert::new()
             .action_env(TRYCMD)
-            .eq(langs, file!["test_data/langs.txt"]);
+            .eq(format!("{langs:#?}"), file!["test_data/langs.txt"]);
         Ok(())
     }
 
