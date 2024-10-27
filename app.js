@@ -76,7 +76,7 @@ Please refer to https://github.com/TryItOnline/tryitonline/tree/master/wrappers 
         });
         await replyToMsg(ctx, `${output}[exit(${exitCode}) in ${realTime}s]`);
       } catch (err) {
-        await replyToMsg(ctx, err.message);
+        await replyToMsg(ctx, `ERROR: ${err.message}`);
       }
     });
   }
