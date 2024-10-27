@@ -1,0 +1,10 @@
+Hello, World!
+gcc -c main.adb
+gnatbind -x main.ali
+gnatlink main.ali -o .bin.tio
+
+Real time: [..] s
+User time: [..] s
+Sys. time: [..] s
+CPU share: [..] %
+Exit code: 0
