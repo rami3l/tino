@@ -145,12 +145,12 @@ impl Client {
 
 #[derive(Clone, Default, Debug)]
 pub struct ExecOpts<'a> {
-    code: &'a str,
-    lang: &'a str,
-    stdin: &'a str,
-    compiler_flags: &'a [&'a str],
-    cli_options: &'a [&'a str],
-    args: &'a [&'a str],
+    pub code: &'a str,
+    pub lang: &'a str,
+    pub stdin: &'a str,
+    pub compiler_flags: &'a [&'a str],
+    pub cli_options: &'a [&'a str],
+    pub args: &'a [&'a str],
 }
 
 #[cfg(test)]
@@ -170,7 +170,7 @@ mod tests {
         let langs = langs.iter().map(|l| &*l.tio_name).collect_vec();
         Assert::new()
             .action_env(TRYCMD)
-            .eq(format!("{langs:#?}"), file!["test_data/langs.txt"]);
+            .eq(format!("{langs:#?}"), file!["test_data/langs.rs"]);
         Ok(())
     }
 

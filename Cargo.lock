@@ -76,6 +76,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "anyhow"
+version = "1.0.91"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c042108f3ed77fd83760a5fd79b53be043192bb3b9dba91d8c574c0ada7850c8"
+
+[[package]]
 name = "aquamarine"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -259,16 +265,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "clap-verbosity-flag"
-version = "2.2.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e099138e1807662ff75e2cebe4ae2287add879245574489f9b1588eb5e5564ed"
-dependencies = [
- "clap",
- "log",
-]
-
-[[package]]
 name = "clap_builder"
 version = "4.5.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -388,6 +384,12 @@ name = "diff"
 version = "0.1.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "56254986775e3233ffa9c4d7d3faaf6d36a2c09d30b20687e9f88bc8bafc16c8"
+
+[[package]]
+name = "dotenv"
+version = "0.15.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "77c90badedccf4105eca100756a0b1289e191f6fcbdadd3cee1d2f614f97da8f"
 
 [[package]]
 name = "dptree"
@@ -1928,8 +1930,10 @@ dependencies = [
 name = "tino"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
+ "axum",
  "clap",
- "clap-verbosity-flag",
+ "dotenv",
  "flate2",
  "itertools 0.13.0",
  "pretty_assertions",
@@ -1943,6 +1947,7 @@ dependencies = [
  "tokio",
  "tracing",
  "tracing-subscriber",
+ "url",
 ]
 
 [[package]]
