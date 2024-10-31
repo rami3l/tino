@@ -3,6 +3,7 @@ use std::sync::{Arc, LazyLock};
 use anyhow::{anyhow, Context, Result};
 use clap::Parser;
 use teloxide::{
+    payloads::SendMessageSetters,
     prelude::*,
     update_listeners::{self, webhooks, UpdateListener},
 };
@@ -72,7 +73,9 @@ Please refer to https://github.com/TryItOnline/tryitonline/tree/master/wrappers 
                     } else {
                         help_str
                     };
-                    bot.send_message(msg.chat.id, resp).await?;
+                    bot.send_message(msg.chat.id, resp)
+                        .disable_notification(true)
+                        .await?;
                 }
                 Ok(())
             }
