@@ -1,4 +1,4 @@
-use std::sync::{Arc, LazyLock};
+use std::{borrow::Cow, sync::LazyLock};
 
 use anyhow::{anyhow, Context, Result};
 use clap::Parser;
@@ -36,22 +36,21 @@ pub struct Tino {
 
 impl Tino {
     async fn dispatch(self) -> Result<()> {
-        let client = Arc::new(Client::default());
-
         static LANGS: [&str; 681] = include!("test_data/langs.rs");
         static LANGS_REPLACED: LazyLock<[String; 681]> =
             LazyLock::new(|| LANGS.map(|s| s.replace("-", "")));
 
         let handler = move |bot: Bot, msg: Message| {
-            let client = Arc::clone(&client);
+            let client = Client::default();
             async move {
                 if let Some(rest) = msg.text().and_then(|t| t.strip_prefix("/tio")) {
                     let help_str = r#"Usage: /tio<lang> <code>
 e.g. /tiopython3 print("Hello, World!")
 
-Please refer to https://github.com/TryItOnline/tryitonline/tree/master/wrappers for the list of supported languages."#.into();
+Please refer to https://github.com/TryItOnline/tryitonline/tree/master/wrappers for the list of supported languages."#;
 
-                    let resp = if let Some((mut lang, code)) = rest.split_once(' ') {
+                    let mut resp = Cow::from(help_str);
+                    if let Some((mut lang, code)) = rest.split_once(' ') {
                         if let Ok(name) = bot.get_my_name().await {
                             if let Some(stripped) = lang.strip_suffix(&format!("@{}", name.name)) {
                                 lang = stripped;
@@ -59,7 +58,7 @@ Please refer to https://github.com/TryItOnline/tryitonline/tree/master/wrappers 
                         }
                         info!("triggered `/tio{lang}`");
                         if let Some(idx) = LANGS_REPLACED.iter().position(|l| l == lang) {
-                            client
+                            resp = client
                                 .exec(ExecOpts {
                                     code,
                                     lang: LANGS[idx],
@@ -67,11 +66,8 @@ Please refer to https://github.com/TryItOnline/tryitonline/tree/master/wrappers 
                                 })
                                 .await
                                 .unwrap_or_else(|e| format!("ERROR: {e:#?}"))
-                        } else {
-                            help_str
+                                .into()
                         }
-                    } else {
-                        help_str
                     };
                     bot.send_message(msg.chat.id, resp)
                         .disable_notification(true)
