@@ -38,7 +38,7 @@ impl Tino {
     async fn dispatch(self) -> Result<()> {
         static LANGS: [&str; 681] = include!("test_data/langs.rs");
         static LANGS_REPLACED: LazyLock<[String; 681]> =
-            LazyLock::new(|| LANGS.map(|s| s.replace("-", "")));
+            LazyLock::new(|| LANGS.map(|s| s.replace("-", "_")));
 
         let handler = move |bot: Bot, msg: Message| {
             let client = Client::default();
@@ -57,8 +57,8 @@ Please refer to https://github.com/TryItOnline/tryitonline/tree/master/wrappers 
                             }
                         }
                         info!("triggered `/tio{lang}`");
-                        if let Some(idx) = LANGS_REPLACED.iter().position(|l| l == lang) {
-                            resp = client
+                        resp = if let Some(idx) = LANGS_REPLACED.iter().position(|l| l == lang) {
+                                client
                                 .exec(ExecOpts {
                                     code,
                                     lang: LANGS[idx],
@@ -66,8 +66,10 @@ Please refer to https://github.com/TryItOnline/tryitonline/tree/master/wrappers 
                                 })
                                 .await
                                 .unwrap_or_else(|e| format!("ERROR: {e:#?}"))
-                                .into()
-                        }
+                        } else {
+                            format!("Unknown language `{lang}` :[
+(Hint: Telegram doesn't support command names with `-`, maybe try `_` instead?)")
+                        }.into();
                     };
                     bot.send_message(msg.chat.id, resp)
                         .disable_notification(true)
