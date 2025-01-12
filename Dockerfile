@@ -1,14 +1,14 @@
 FROM lukemathwalker/cargo-chef:latest-rust-alpine AS chef
 
 # ===== Plan Stage =====
-FROM chef as tino-planner
+FROM chef AS tino-planner
 ENV APP_NAME tino
 WORKDIR /app/${APP_NAME}
 COPY . .
 RUN cargo chef prepare --recipe-path recipe.json
 
 # ===== Build Stage =====
-FROM chef as tino-builder
+FROM chef AS tino-builder
 ENV APP_NAME tino
 WORKDIR /app/${APP_NAME}
 COPY --from=tino-planner /app/${APP_NAME}/recipe.json recipe.json
