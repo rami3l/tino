@@ -5,6 +5,7 @@ use clap::Parser;
 use teloxide::{
     payloads::SendMessageSetters,
     prelude::*,
+    types::Me,
     update_listeners::{self, webhooks, UpdateListener},
 };
 use tino::{Client, ExecOpts};
@@ -40,7 +41,7 @@ impl Tino {
         static LANGS_REPLACED: LazyLock<[String; 681]> =
             LazyLock::new(|| LANGS.map(|s| s.replace("-", "_")));
 
-        let handler = move |bot: Bot, msg: Message| {
+        let handler = move |bot: Bot, msg: Message, me: Me| {
             let client = Client::default();
             async move {
                 if let Some(rest) = msg.text().and_then(|t| t.strip_prefix("/tio")) {
@@ -51,14 +52,12 @@ Please refer to https://github.com/TryItOnline/tryitonline/tree/master/wrappers 
 
                     let mut resp = Cow::from(help_str);
                     if let Some((mut lang, code)) = rest.split_once(' ') {
-                        if let Ok(name) = bot.get_my_name().await {
-                            if let Some(stripped) = lang.strip_suffix(&format!("@{}", name.name)) {
-                                lang = stripped;
-                            }
+                        if let Some(stripped) = lang.strip_suffix(&format!("@{}", me.username())) {
+                            lang = stripped;
                         }
                         info!("triggered `/tio{lang}`");
                         resp = if let Some(idx) = LANGS_REPLACED.iter().position(|l| l == lang) {
-                                client
+                            client
                                 .exec(ExecOpts {
                                     code,
                                     lang: LANGS[idx],
@@ -67,9 +66,11 @@ Please refer to https://github.com/TryItOnline/tryitonline/tree/master/wrappers 
                                 .await
                                 .unwrap_or_else(|e| format!("ERROR: {e:#?}"))
                         } else {
-                            format!("Unknown language `{lang}` :[
-(Hint: Telegram doesn't support command names with `-`, maybe try `_` instead?)")
-                        }.into();
+                            format!(
+                                "Unknown language `{lang}` :[\n(Hint: Telegram doesn't support command names with `-`, maybe try `_` instead?)\n\n"
+                            ) + &resp
+                        }
+                        .into();
                     };
                     bot.send_message(msg.chat.id, resp)
                         .disable_notification(true)
