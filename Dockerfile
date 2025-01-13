@@ -1,6 +1,4 @@
-# HACK: Version pinned due to https://github.com/LukeMathWalker/cargo-chef/issues/290
-FROM lukemathwalker/cargo-chef:0.1.68-rust-latest AS chef
-# FROM lukemathwalker/cargo-chef:latest-rust-alpine AS chef
+FROM lukemathwalker/cargo-chef:latest-rust-alpine AS chef
 
 # ===== Plan Stage =====
 FROM chef AS tino-planner
