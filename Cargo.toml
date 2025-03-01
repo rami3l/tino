@@ -4,18 +4,18 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-anyhow = "1.0.93"
-axum = "0.7.9"
-clap = { version = "4.5.21", features = ["cargo", "derive", "env"] }
+anyhow = "1.0.96"
+axum = "0.8.1"
+clap = { version = "4.5.31", features = ["cargo", "derive", "env"] }
 dotenv = "0.15.0"
-flate2 = "1.0.35"
+flate2 = "1.1.0"
 regex = "1.11.1"
 reqwest = { version = "0.12.9", default-features = false, features = [
   "json",
   "rustls-tls-native-roots",
 ] }
-serde = "1.0.215"
-serde_json = "1.0.133"
+serde = "1.0.218"
+serde_json = "1.0.139"
 teloxide = { version = "0.13.0", default-features = false, features = [
   "ctrlc_handler",
   "macros",
